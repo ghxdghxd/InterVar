@@ -489,7 +489,8 @@ def check_input():
     if inputft.lower() == 'vcf':
         if os.path.isfile(paras['convert2annovar']):
         #convert2annovar.pl -format vcf4 variantfile > variant.avinput
-            cmd="perl "+paras['convert2annovar']+" -format vcf4 "+ paras['inputfile']+"> "+paras['inputfile']+".avinput"
+            cmd = "perl "+paras['convert2annovar']+" -includeinfo -allsample -withfreq -format vcf4 -filter pass " + \
+                paras['inputfile']+"> "+paras['inputfile']+".avinput"
             print("Warning: Begin to convert your vcf file of %s to AVinput of Annovar ..." % paras['inputfile'])
             print("%s" %cmd)
             os.system(cmd)
@@ -528,18 +529,18 @@ def check_annovar_result():
         if paras['skip_annovar'] != True:
             sys.exit()
     if inputft.lower() == 'avinput' :
-        cmd="perl "+paras['table_annovar']+" "+paras['inputfile']+" "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ paras['outfile']+" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp147,dbnsfp33a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene  -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
+        cmd="perl "+paras['table_annovar']+" "+paras['inputfile']+" "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ paras['outfile']+" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp150,dbnsfp35a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene  -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
         print("%s" %cmd)
         os.system(cmd)
     if inputft.lower() == 'vcf' :
-        cmd="perl "+paras['table_annovar']+" "+paras['inputfile']+".avinput "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ paras['outfile']+" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp147,dbnsfp33a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene   -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
+        cmd="perl "+paras['table_annovar']+" "+paras['inputfile']+".avinput "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ paras['outfile']+" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp150,dbnsfp35a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene   -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
         print("%s" %cmd)
         os.system(cmd)
     if inputft.lower() == 'vcf_m' :
         for f in glob.iglob(paras['outfile']+"*.avinput"): 
             print("INFO: Begin to annotate sample file of %s ...." %(f))
             new_outfile=re.sub(".avinput","",f)
-            cmd="perl "+paras['table_annovar']+" "+f+" "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ new_outfile +" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp147,dbnsfp33a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene   -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
+            cmd="perl "+paras['table_annovar']+" "+f+" "+paras['database_locat']+" -buildver "+paras['buildver']+" -remove -out "+ new_outfile +" -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp150,dbnsfp35a,clinvar_20190305,gnomad_genome,dbscsnv11,dbnsfp31a_interpro,rmsk,ensGene,knownGene   -operation  g,f,f,f,f,f,f,f,f,r,g,g   -nastring ."+annovar_options
             print("%s" %cmd)
             os.system(cmd)
         
